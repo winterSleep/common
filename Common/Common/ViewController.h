@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NBNimbusTableViewController.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : NBNimbusTableViewController
 
 
 @end

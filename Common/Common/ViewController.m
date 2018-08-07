@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "XDCellCatalog.h"
 
 @interface ViewController ()
 
@@ -16,9 +17,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    NSMutableArray *cellObjects = [NSMutableArray array];
+    XDTitleCellObject *object = [XDTitleCellObject objectWithTitle:@"123"];
+    [cellObjects addObject:object];
+    object = [XDTitleCellObject objectWithTitle:@"123"];
+    [cellObjects addObject:object];
+    object = [XDTitleCellObject objectWithTitle:@"123"];
+    [cellObjects addObject:object];
+    self.dataSource = [[NIMutableTableViewModel alloc] initWithListArray:cellObjects delegate:self];
+    [self.tableView reloadData];
+    [self setShowsPullToRefresh:YES];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
