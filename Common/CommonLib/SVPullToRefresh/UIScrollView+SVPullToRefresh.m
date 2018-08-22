@@ -324,7 +324,7 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
             self.state = ZYSVPullToRefreshStateTriggered;
         else if(contentOffset.y >= scrollOffsetThreshold && self.state != ZYSVPullToRefreshStateStopped)
             self.state = ZYSVPullToRefreshStateStopped;
-    } else {
+    } else  {
 //        CGFloat offset = MAX(self.scrollView.contentOffset.y * -1, 0.0f);
 //        offset = MIN(offset, self.originalTopInset + self.bounds.size.height);
 //        UIEdgeInsets contentInset = self.scrollView.contentInset;
