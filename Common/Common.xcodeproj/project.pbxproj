@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F58E704212D644E00093F34 /* RTRootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58E701212D644E00093F34 /* RTRootNavigationController.m */; };
+		1F58E705212D644E00093F34 /* UIViewController+RTRootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58E703212D644E00093F34 /* UIViewController+RTRootNavigationController.m */; };
+		1F58E717212D666000093F34 /* RDVTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58E712212D666000093F34 /* RDVTabBar.m */; };
+		1F58E718212D666000093F34 /* RDVTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58E714212D666000093F34 /* RDVTabBarController.m */; };
+		1F58E719212D666000093F34 /* RDVTabBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F58E716212D666000093F34 /* RDVTabBarItem.m */; };
 		1FE1F89321187E7700CC6C1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1F89221187E7700CC6C1D /* AppDelegate.m */; };
 		1FE1F89621187E7700CC6C1D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1F89521187E7700CC6C1D /* ViewController.m */; };
 		1FE1F89921187E7700CC6C1D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE1F89721187E7700CC6C1D /* Main.storyboard */; };
 		1FE1F89B21187E7900CC6C1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FE1F89A21187E7900CC6C1D /* Assets.xcassets */; };
 		1FE1F89E21187E7900CC6C1D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE1F89C21187E7900CC6C1D /* LaunchScreen.storyboard */; };
 		1FE1F8A121187E7900CC6C1D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1F8A021187E7900CC6C1D /* main.m */; };
-		1FE1F8BE2118838900CC6C1D /* libCommonLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE1F8BD2118838900CC6C1D /* libCommonLib.a */; };
 		1FE1F9A021188BD800CC6C1D /* ColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1F8CE21188BD700CC6C1D /* ColorButton.m */; };
 		1FE1F9A121188BD800CC6C1D /* Colours.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1F8D021188BD700CC6C1D /* Colours.m */; };
 		1FE1F9A221188BD800CC6C1D /* MBProgressHUD+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1F8D221188BD700CC6C1D /* MBProgressHUD+Category.m */; };
@@ -114,10 +118,19 @@
 		1FE1FA1921188E7600CC6C1D /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1FA1721188E7600CC6C1D /* UIScrollView+SVPullToRefresh.m */; };
 		1FE1FA1D21188F2A00CC6C1D /* CHTCollectionViewWaterfallLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1FA1C21188F2900CC6C1D /* CHTCollectionViewWaterfallLayout.m */; };
 		1FE1FA212118906A00CC6C1D /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1FA202118906A00CC6C1D /* UINavigationController+FDFullscreenPopGesture.m */; };
-		33D5007F0C4BDAF181D84E9A /* libPods-Common.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A69C38B216B1AC0D5506EEE7 /* libPods-Common.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F58E700212D644E00093F34 /* RTRootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRootNavigationController.h; sourceTree = "<group>"; };
+		1F58E701212D644E00093F34 /* RTRootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRootNavigationController.m; sourceTree = "<group>"; };
+		1F58E702212D644E00093F34 /* UIViewController+RTRootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTRootNavigationController.h"; sourceTree = "<group>"; };
+		1F58E703212D644E00093F34 /* UIViewController+RTRootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTRootNavigationController.m"; sourceTree = "<group>"; };
+		1F58E711212D666000093F34 /* RDVTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBar.h; sourceTree = "<group>"; };
+		1F58E712212D666000093F34 /* RDVTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBar.m; sourceTree = "<group>"; };
+		1F58E713212D666000093F34 /* RDVTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBarController.h; sourceTree = "<group>"; };
+		1F58E714212D666000093F34 /* RDVTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBarController.m; sourceTree = "<group>"; };
+		1F58E715212D666000093F34 /* RDVTabBarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDVTabBarItem.h; sourceTree = "<group>"; };
+		1F58E716212D666000093F34 /* RDVTabBarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDVTabBarItem.m; sourceTree = "<group>"; };
 		1F7A929921194D7E007E0A0C /* NBCommonLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NBCommonLib.h; sourceTree = "<group>"; };
 		1FE1F88E21187E7700CC6C1D /* Common.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Common.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE1F89121187E7700CC6C1D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -320,14 +333,52 @@
 			files = (
 				1FE1FA1121188DB600CC6C1D /* UIKit.framework in Frameworks */,
 				1FE1FA0F21188DB000CC6C1D /* Foundation.framework in Frameworks */,
-				1FE1F8BE2118838900CC6C1D /* libCommonLib.a in Frameworks */,
-				33D5007F0C4BDAF181D84E9A /* libPods-Common.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F58E6FD212D644E00093F34 /* RTRootNavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				1F58E6FE212D644E00093F34 /* Assets */,
+				1F58E6FF212D644E00093F34 /* Classes */,
+			);
+			path = RTRootNavigationController;
+			sourceTree = "<group>";
+		};
+		1F58E6FE212D644E00093F34 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		1F58E6FF212D644E00093F34 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				1F58E700212D644E00093F34 /* RTRootNavigationController.h */,
+				1F58E701212D644E00093F34 /* RTRootNavigationController.m */,
+				1F58E702212D644E00093F34 /* UIViewController+RTRootNavigationController.h */,
+				1F58E703212D644E00093F34 /* UIViewController+RTRootNavigationController.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		1F58E710212D666000093F34 /* RDVTabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				1F58E711212D666000093F34 /* RDVTabBar.h */,
+				1F58E712212D666000093F34 /* RDVTabBar.m */,
+				1F58E713212D666000093F34 /* RDVTabBarController.h */,
+				1F58E714212D666000093F34 /* RDVTabBarController.m */,
+				1F58E715212D666000093F34 /* RDVTabBarItem.h */,
+				1F58E716212D666000093F34 /* RDVTabBarItem.m */,
+			);
+			path = RDVTabBarController;
+			sourceTree = "<group>";
+		};
 		1FE1F88521187E7700CC6C1D = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +428,8 @@
 		1FE1F8C621188AFF00CC6C1D /* CommonLib */ = {
 			isa = PBXGroup;
 			children = (
+				1F58E710212D666000093F34 /* RDVTabBarController */,
+				1F58E6FD212D644E00093F34 /* RTRootNavigationController */,
 				1FE1FA1E2118906A00CC6C1D /* FDFullscreenPopGesture */,
 				1FE1FA1A21188F2900CC6C1D /* CHTCollectionViewWaterfallLayout */,
 				1FE1FA1221188E7600CC6C1D /* SVPullToRefresh */,
@@ -797,6 +850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FE1F9DD21188BD800CC6C1D /* NBNimbusSearchDisplayController.m in Sources */,
+				1F58E717212D666000093F34 /* RDVTabBar.m in Sources */,
 				1FE1F9BD21188BD800CC6C1D /* UIViewController+HUD.m in Sources */,
 				1FE1F9C321188BD800CC6C1D /* XDFormCellCatalog.m in Sources */,
 				1FE1F9D821188BD800CC6C1D /* NBWaterFallCollectionViewModel.m in Sources */,
@@ -842,6 +896,7 @@
 				1FE1F9AF21188BD800CC6C1D /* NSString+RemoveEmoji.m in Sources */,
 				1FE1F9D421188BD800CC6C1D /* NBCollectionReusableViewObject.m in Sources */,
 				1FE1FA0C21188BD800CC6C1D /* NBBarButtonView.m in Sources */,
+				1F58E719212D666000093F34 /* RDVTabBarItem.m in Sources */,
 				1FE1FA212118906A00CC6C1D /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				1FE1F9D621188BD800CC6C1D /* NBMutableCollectionViewModel.m in Sources */,
 				1FE1F9D221188BD800CC6C1D /* NBCollectionHeaderViewObject.m in Sources */,
@@ -868,7 +923,10 @@
 				1FE1F9B721188BD800CC6C1D /* UINavigationItem+BackTitle.m in Sources */,
 				1FE1F9B821188BD800CC6C1D /* UIResponder+Router.m in Sources */,
 				1FE1F9C021188BD800CC6C1D /* NBLoadingCellObject.m in Sources */,
+				1F58E705212D644E00093F34 /* UIViewController+RTRootNavigationController.m in Sources */,
+				1F58E704212D644E00093F34 /* RTRootNavigationController.m in Sources */,
 				1FE1F9CC21188BD800CC6C1D /* XDSubTitleImageObject.m in Sources */,
+				1F58E718212D666000093F34 /* RDVTabBarController.m in Sources */,
 				1FE1F9D021188BD800CC6C1D /* NBCollectionCellObject.m in Sources */,
 				1FE1F9BB21188BD800CC6C1D /* UIView+FrameCategory.m in Sources */,
 				1FE1F9B221188BD800CC6C1D /* UIDevice+Utils.m in Sources */,
