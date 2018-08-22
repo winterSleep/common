@@ -119,19 +119,19 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
     self.zy_pullToRefreshView.hidden = !showsPullToRefresh;
     
     if(!showsPullToRefresh) {
-      if (self.zy_pullToRefreshView.isObserving) {
-        [self removeObserver:self.zy_pullToRefreshView forKeyPath:@"contentOffset"];
-        [self removeObserver:self.zy_pullToRefreshView forKeyPath:@"frame"];
-        [self.zy_pullToRefreshView resetScrollViewContentInset];
-        self.zy_pullToRefreshView.isObserving = NO;
-      }
+        if (self.zy_pullToRefreshView.isObserving) {
+            [self removeObserver:self.zy_pullToRefreshView forKeyPath:@"contentOffset"];
+            [self removeObserver:self.zy_pullToRefreshView forKeyPath:@"frame"];
+            [self.zy_pullToRefreshView resetScrollViewContentInset];
+            self.zy_pullToRefreshView.isObserving = NO;
+        }
     }
     else {
-      if (!self.zy_pullToRefreshView.isObserving) {
-        [self addObserver:self.zy_pullToRefreshView forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self.zy_pullToRefreshView forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
-        self.zy_pullToRefreshView.isObserving = YES;
-      }
+        if (!self.zy_pullToRefreshView.isObserving) {
+            [self addObserver:self.zy_pullToRefreshView forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+            [self addObserver:self.zy_pullToRefreshView forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
+            self.zy_pullToRefreshView.isObserving = YES;
+        }
     }
 }
 
@@ -185,29 +185,29 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
         self.showsDateLabel = NO;
         
         self.titles = [NSMutableArray arrayWithObjects:NSLocalizedString(@"Pull to refresh...",),
-                                                       NSLocalizedString(@"Pull to refresh...",),
-                                                       NSLocalizedString(@"Release to refresh...",),
-                                                       NSLocalizedString(@"Loading...",),
-                                                       nil];
+                       NSLocalizedString(@"Pull to refresh...",),
+                       NSLocalizedString(@"Release to refresh...",),
+                       NSLocalizedString(@"Loading...",),
+                       nil];
         
         self.subtitles = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
         self.viewForState = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", @"", nil];
     }
-
+    
     return self;
 }
 
-- (void)willMoveToSuperview:(UIView *)newSuperview { 
+- (void)willMoveToSuperview:(UIView *)newSuperview {
     if (self.superview && newSuperview == nil) {
         //use self.superview, not self.scrollView. Why self.scrollView == nil here?
         UIScrollView *scrollView = (UIScrollView *)self.superview;
         if (scrollView.zy_showsPullToRefresh) {
-          if (self.isObserving) {
-            //If enter this branch, it is the moment just before "SVPullToRefreshView's dealloc", so remove observer here
-            [scrollView removeObserver:self forKeyPath:@"contentOffset"];
-            [scrollView removeObserver:self forKeyPath:@"frame"];
-            self.isObserving = NO;
-          }
+            if (self.isObserving) {
+                //If enter this branch, it is the moment just before "SVPullToRefreshView's dealloc", so remove observer here
+                [scrollView removeObserver:self forKeyPath:@"contentOffset"];
+                [scrollView removeObserver:self forKeyPath:@"frame"];
+                self.isObserving = NO;
+            }
         }
     }
 }
@@ -234,7 +234,7 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
     CGRect arrowFrame = self.arrow.frame;
     arrowFrame.origin.x = ceilf(remainingWidth*position);
     self.arrow.frame = arrowFrame;
-
+    
     self.activityIndicatorView.center = self.arrow.center;
     
     id customView = [self.viewForState objectAtIndex:self.state];
@@ -278,22 +278,27 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 - (void)resetScrollViewContentInset {
     UIEdgeInsets currentInsets = self.scrollView.contentInset;
     currentInsets.top = self.originalTopInset;
-    [self setScrollViewContentInset:currentInsets];
+    [self setScrollViewContentInset:currentInsets isReset:YES];
 }
 
 - (void)setScrollViewContentInsetForLoading {
     CGFloat offset = MAX(self.scrollView.contentOffset.y * -1, 0);
     UIEdgeInsets currentInsets = self.scrollView.contentInset;
     currentInsets.top = MIN(offset, self.originalTopInset + self.bounds.size.height);
-    [self setScrollViewContentInset:currentInsets];
+    [self setScrollViewContentInset:currentInsets isReset:NO];
 }
 
-- (void)setScrollViewContentInset:(UIEdgeInsets)contentInset {
+- (void)setScrollViewContentInset:(UIEdgeInsets)contentInset isReset:(BOOL)isReset{
     [UIView animateWithDuration:0.3
                           delay:0
                         options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          self.scrollView.contentInset = contentInset;
+                         if (!isReset) {
+                             if (self.originalTopInset != 0) {
+                                 [self.scrollView setContentOffset:CGPointMake(0, -self.originalTopInset - self.bounds.size.height)];
+                             }
+                         }
                      }
                      completion:^(BOOL finished) {
                          
@@ -302,7 +307,7 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 
 #pragma mark - Observing
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {    
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if([keyPath isEqualToString:@"contentOffset"])
         [self scrollViewDidScroll:[[change valueForKey:NSKeyValueChangeNewKey] CGPointValue]];
     else if([keyPath isEqualToString:@"frame"])
@@ -320,10 +325,10 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
         else if(contentOffset.y >= scrollOffsetThreshold && self.state != ZYSVPullToRefreshStateStopped)
             self.state = ZYSVPullToRefreshStateStopped;
     } else {
-        CGFloat offset = MAX(self.scrollView.contentOffset.y * -1, 0.0f);
-        offset = MIN(offset, self.originalTopInset + self.bounds.size.height);
-        UIEdgeInsets contentInset = self.scrollView.contentInset;
-        self.scrollView.contentInset = UIEdgeInsetsMake(offset, contentInset.left, contentInset.bottom, contentInset.right);
+//        CGFloat offset = MAX(self.scrollView.contentOffset.y * -1, 0.0f);
+//        offset = MIN(offset, self.originalTopInset + self.bounds.size.height);
+//        UIEdgeInsets contentInset = self.scrollView.contentInset;
+//        self.scrollView.contentInset = UIEdgeInsetsMake(offset, contentInset.left, contentInset.bottom, contentInset.right);
     }
 }
 
@@ -331,9 +336,9 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 
 - (SVPullToRefreshArrow *)arrow {
     if(!_arrow) {
-		_arrow = [[SVPullToRefreshArrow alloc]initWithFrame:CGRectMake(0, self.bounds.size.height-54, 22, 48)];
+        _arrow = [[SVPullToRefreshArrow alloc]initWithFrame:CGRectMake(0, self.bounds.size.height-54, 22, 48)];
         _arrow.backgroundColor = [UIColor clearColor];
-		[self addSubview:_arrow];
+        [self addSubview:_arrow];
     }
     return _arrow;
 }
@@ -377,15 +382,15 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 - (NSDateFormatter *)dateFormatter {
     if(!dateFormatter) {
         dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setDateStyle:NSDateFormatterShortStyle];
-		[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-		dateFormatter.locale = [NSLocale currentLocale];
+        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        dateFormatter.locale = [NSLocale currentLocale];
     }
     return dateFormatter;
 }
 
 - (UIColor *)arrowColor {
-	return self.arrow.arrowColor; // pass through
+    return self.arrow.arrowColor; // pass through
 }
 
 - (UIColor *)textColor {
@@ -399,8 +404,8 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 #pragma mark - Setters
 
 - (void)setArrowColor:(UIColor *)newArrowColor {
-	self.arrow.arrowColor = newArrowColor; // pass through
-	[self.arrow setNeedsDisplay];
+    self.arrow.arrowColor = newArrowColor; // pass through
+    [self.arrow setNeedsDisplay];
 }
 
 - (void)setTitle:(NSString *)title forState:(ZYSVPullToRefreshState)state {
@@ -442,7 +447,7 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 - (void)setTextColor:(UIColor *)newTextColor {
     textColor = newTextColor;
     self.titleLabel.textColor = newTextColor;
-	self.subtitleLabel.textColor = newTextColor;
+    self.subtitleLabel.textColor = newTextColor;
 }
 
 - (void)setActivityIndicatorViewStyle:(UIActivityIndicatorViewStyle)viewStyle {
@@ -455,7 +460,7 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 }
 
 - (void)setDateFormatter:(NSDateFormatter *)newDateFormatter {
-	dateFormatter = newDateFormatter;
+    dateFormatter = newDateFormatter;
     self.dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last Updated: %@",), self.lastUpdatedDate?[newDateFormatter stringFromDate:self.lastUpdatedDate]:NSLocalizedString(@"Never",)];
 }
 
@@ -549,36 +554,36 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
 @synthesize arrowColor;
 
 - (UIColor *)arrowColor {
-	if (arrowColor) return arrowColor;
-	return [UIColor grayColor]; // default Color
+    if (arrowColor) return arrowColor;
+    return [UIColor grayColor]; // default Color
 }
 
 - (void)drawRect:(CGRect)rect {
-	CGContextRef c = UIGraphicsGetCurrentContext();
-	
-	// the rects above the arrow
-	CGContextAddRect(c, CGRectMake(5, 0, 12, 4)); // to-do: use dynamic points
-	CGContextAddRect(c, CGRectMake(5, 6, 12, 4)); // currently fixed size: 22 x 48pt
-	CGContextAddRect(c, CGRectMake(5, 12, 12, 4));
-	CGContextAddRect(c, CGRectMake(5, 18, 12, 4));
-	CGContextAddRect(c, CGRectMake(5, 24, 12, 4));
-	CGContextAddRect(c, CGRectMake(5, 30, 12, 4));
-	
-	// the arrow
-	CGContextMoveToPoint(c, 0, 34);
-	CGContextAddLineToPoint(c, 11, 48);
-	CGContextAddLineToPoint(c, 22, 34);
-	CGContextAddLineToPoint(c, 0, 34);
-	CGContextClosePath(c);
-	
-	CGContextSaveGState(c);
-	CGContextClip(c);
-	
-	// Gradient Declaration
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGFloat alphaGradientLocations[] = {0, 0.8f};
+    CGContextRef c = UIGraphicsGetCurrentContext();
     
-	CGGradientRef alphaGradient = nil;
+    // the rects above the arrow
+    CGContextAddRect(c, CGRectMake(5, 0, 12, 4)); // to-do: use dynamic points
+    CGContextAddRect(c, CGRectMake(5, 6, 12, 4)); // currently fixed size: 22 x 48pt
+    CGContextAddRect(c, CGRectMake(5, 12, 12, 4));
+    CGContextAddRect(c, CGRectMake(5, 18, 12, 4));
+    CGContextAddRect(c, CGRectMake(5, 24, 12, 4));
+    CGContextAddRect(c, CGRectMake(5, 30, 12, 4));
+    
+    // the arrow
+    CGContextMoveToPoint(c, 0, 34);
+    CGContextAddLineToPoint(c, 11, 48);
+    CGContextAddLineToPoint(c, 22, 34);
+    CGContextAddLineToPoint(c, 0, 34);
+    CGContextClosePath(c);
+    
+    CGContextSaveGState(c);
+    CGContextClip(c);
+    
+    // Gradient Declaration
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGFloat alphaGradientLocations[] = {0, 0.8f};
+    
+    CGGradientRef alphaGradient = nil;
     if([[[UIDevice currentDevice] systemVersion]floatValue] >= 5){
         NSArray* alphaGradientColors = [NSArray arrayWithObjects:
                                         (id)[self.arrowColor colorWithAlphaComponent:0].CGColor,
@@ -607,13 +612,13 @@ static char ZYUIScrollViewPullToRefreshViewHeight;
         colors[7] = 1;
         alphaGradient = CGGradientCreateWithColorComponents(colorSpace,colors,alphaGradientLocations,2);
     }
-	
-	
-	CGContextDrawLinearGradient(c, alphaGradient, CGPointZero, CGPointMake(0, rect.size.height), 0);
     
-	CGContextRestoreGState(c);
-	
-	CGGradientRelease(alphaGradient);
-	CGColorSpaceRelease(colorSpace);
+    
+    CGContextDrawLinearGradient(c, alphaGradient, CGPointZero, CGPointMake(0, rect.size.height), 0);
+    
+    CGContextRestoreGState(c);
+    
+    CGGradientRelease(alphaGradient);
+    CGColorSpaceRelease(colorSpace);
 }
 @end

@@ -22,6 +22,7 @@
 
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import <objc/runtime.h>
+#import "RTRootNavigationController.h"
 
 @interface UINavigationController (FDFullscreenPopGesturePrivate)
 
@@ -60,8 +61,15 @@
     
     // Ignore when the active view controller doesn't allow interactive pop.
     UIViewController *topViewController = self.navigationController.viewControllers.lastObject;
-    if (topViewController.fd_interactivePopDisabled) {
-        return NO;
+    if ([topViewController isKindOfClass:[RTContainerController class]]) {
+        RTContainerController *vc = (RTContainerController *)topViewController;
+        if ([vc contentViewController].fd_interactivePopDisabled) {
+            return NO;
+        }
+    }else{
+        if (topViewController.fd_interactivePopDisabled) {
+            return NO;
+        }
     }
     
     // Ignore when the beginning location is beyond max allowed initial distance to left edge.
@@ -70,7 +78,7 @@
     if (maxAllowedInitialDistance > 0 && beginningLocation.x > maxAllowedInitialDistance) {
         return NO;
     }
-
+    
     // Ignore pan gesture when the navigation controller is currently in transition.
     if ([[self.navigationController valueForKey:@"_isTransitioning"] boolValue]) {
         return NO;
@@ -82,9 +90,17 @@
         return NO;
     }
     BOOL shouldBegin = YES;
-    shouldBegin = [[self.navigationController topViewController] fullscreenPopGestureShouldBegin:gestureRecognizer];
-    if (shouldBegin) {
-        self.navigationController.currentAnimateViewController = [self.navigationController topViewController];
+    if ([self.navigationController isKindOfClass:[RTRootNavigationController class]]) {
+        RTRootNavigationController *nvc = (RTRootNavigationController *)self.navigationController;
+        shouldBegin = [[nvc rt_topViewController] fullscreenPopGestureShouldBegin:gestureRecognizer];
+        if (shouldBegin) {
+            self.navigationController.currentAnimateViewController = [nvc rt_topViewController];
+        }
+    }else{
+        shouldBegin = [[self.navigationController topViewController] fullscreenPopGestureShouldBegin:gestureRecognizer];
+        if (shouldBegin) {
+            self.navigationController.currentAnimateViewController = [self.navigationController topViewController];
+        }
     }
     return shouldBegin;
 }
@@ -128,7 +144,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
     [self fd_viewWillAppear:animated];
     
     if (self.fd_willAppearInjectBlock) {
-//        self.fd_willAppearInjectBlock(self, animated);
+        //        self.fd_willAppearInjectBlock(self, animated);
     }
 }
 
@@ -174,11 +190,11 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
         
         // Add our own gesture recognizer to where the onboard screen edge pan gesture recognizer is attached to.
         [self.interactivePopGestureRecognizer.view addGestureRecognizer:self.fd_fullscreenPopGestureRecognizer];
-
+        
         // Forward the gesture events to the private handler of the onboard gesture recognizer.
         self.fd_fullscreenPopGestureRecognizer.delegate = self.fd_popGestureRecognizerDelegate;
         [self.fd_fullscreenPopGestureRecognizer addTarget:self action:@selector(handleNavigationTransition:)];
-
+        
         // Disable the onboard gesture recognizer.
         self.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -231,7 +247,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 - (_FDFullscreenPopGestureRecognizerDelegate *)fd_popGestureRecognizerDelegate
 {
     _FDFullscreenPopGestureRecognizerDelegate *delegate = objc_getAssociatedObject(self, _cmd);
-
+    
     if (!delegate) {
         delegate = [[_FDFullscreenPopGestureRecognizerDelegate alloc] init];
         delegate.navigationController = self;
@@ -244,7 +260,7 @@ typedef void (^_FDViewControllerWillAppearInjectBlock)(UIViewController *viewCon
 - (UIPanGestureRecognizer *)fd_fullscreenPopGestureRecognizer
 {
     UIPanGestureRecognizer *panGestureRecognizer = objc_getAssociatedObject(self, _cmd);
-
+    
     if (!panGestureRecognizer) {
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] init];
         panGestureRecognizer.maximumNumberOfTouches = 1;
