@@ -24,8 +24,10 @@
         self.imageView = [[UIImageView alloc] init];
         NSMutableArray *animationImages = [NSMutableArray array];
         for (int i=0; i<4; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pull_refresh_loading_%i", i]];
-            [animationImages addObject:image];
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Common.bundle/pull_refresh_loading_%i", i]];
+            if (image) {
+                [animationImages addObject:image];
+            }
         }
         [self.imageView setAnimationImages:animationImages];
         [self addSubview:self.imageView];

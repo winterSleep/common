@@ -46,7 +46,7 @@ NSInteger const kPullToRefreshAnimationImagesCount = 20;
             CGFloat distance = fabs(contentOffset.y) -  contentInsets.top;
             NSInteger animationImagesCount = kPullToRefreshAnimationImagesCount;
             NSInteger imageNumber = MIN(animationImagesCount, (distance / 3));
-            NSString *imageName = [NSString stringWithFormat:@"pull_refresh_trigger_ani%li", imageNumber];
+            NSString *imageName = [NSString stringWithFormat:@"Common.bundle/pull_refresh_trigger_ani%li", imageNumber];
             UIImage *image = [UIImage imageNamed:imageName];
             [self.imageView setImage:image];
         }
@@ -63,7 +63,7 @@ NSInteger const kPullToRefreshAnimationImagesCount = 20;
     if (fromState == ZYSVPullToRefreshStateLoading &&
         toState == ZYSVPullToRefreshStateStopped) {
         self.shouldAnimate = false;
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pull_refresh_trigger_ani%li", kPullToRefreshAnimationImagesCount]];
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Common.bundle/pull_refresh_trigger_ani%li", kPullToRefreshAnimationImagesCount]];
         [self.imageView setImage:image];
     }
 }
