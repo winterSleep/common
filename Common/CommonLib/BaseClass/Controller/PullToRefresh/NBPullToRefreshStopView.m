@@ -8,6 +8,8 @@
 
 #import "NBPullToRefreshStopView.h"
 #import <Masonry/Masonry.h>
+#import <Nimbus/NimbusCore.h>
+#import "NSBundle+AssociatedBundle.h"
 
 NSInteger const kPullToRefreshAnimationImagesCount = 20;
 
@@ -46,8 +48,9 @@ NSInteger const kPullToRefreshAnimationImagesCount = 20;
             CGFloat distance = fabs(contentOffset.y) -  contentInsets.top;
             NSInteger animationImagesCount = kPullToRefreshAnimationImagesCount;
             NSInteger imageNumber = MIN(animationImagesCount, (distance / 3));
-            NSString *imageName = [NSString stringWithFormat:@"Common.bundle/pull_refresh_trigger_ani%li", imageNumber];
-            UIImage *image = [UIImage imageNamed:imageName];
+            NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
+            NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_trigger_ani%i", imageNumber]);
+            UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
             [self.imageView setImage:image];
         }
     }
@@ -63,7 +66,9 @@ NSInteger const kPullToRefreshAnimationImagesCount = 20;
     if (fromState == ZYSVPullToRefreshStateLoading &&
         toState == ZYSVPullToRefreshStateStopped) {
         self.shouldAnimate = false;
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Common.bundle/pull_refresh_trigger_ani%li", kPullToRefreshAnimationImagesCount]];
+        NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
+        NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_trigger_ani%i", kPullToRefreshAnimationImagesCount]);
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         [self.imageView setImage:image];
     }
 }

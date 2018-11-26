@@ -8,6 +8,8 @@
 
 #import "NBPullToRefreshTriggerView.h"
 #import <Masonry/Masonry.h>
+#import <Nimbus/NimbusCore.h>
+#import "NSBundle+AssociatedBundle.h"
 
 extern NSInteger const kPullToRefreshAnimationImagesCount;
 
@@ -23,7 +25,9 @@ extern NSInteger const kPullToRefreshAnimationImagesCount;
     self = [super initWithFrame:frame];
     if (self) {
         self.imageView = [[UIImageView alloc] init];
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"pull_refresh_trigger_ani%li", kPullToRefreshAnimationImagesCount]];
+        NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
+        NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_trigger_ani%i", kPullToRefreshAnimationImagesCount]);
+        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
         [self.imageView setImage:image];
         [self addSubview:self.imageView];
         [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {

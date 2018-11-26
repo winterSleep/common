@@ -9,6 +9,8 @@
 #import "NBPullToRefreshLoadingView.h"
 #import <Masonry/Masonry.h>
 #import "NBCommonLib.h"
+#import <Nimbus/NimbusCore.h>
+#import "NSBundle+AssociatedBundle.h"
 
 @interface NBPullToRefreshLoadingView ()
 
@@ -23,8 +25,10 @@
     if (self) {
         self.imageView = [[UIImageView alloc] init];
         NSMutableArray *animationImages = [NSMutableArray array];
+        NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
         for (int i=0; i<4; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"Common.bundle/pull_refresh_loading_%i", i]];
+            NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_loading_%i", i]);
+            UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
             if (image) {
                 [animationImages addObject:image];
             }
