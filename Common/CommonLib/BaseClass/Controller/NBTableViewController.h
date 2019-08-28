@@ -22,6 +22,8 @@
  */
 @property (nonatomic) BOOL clearsSelectionOnViewWillAppear;
 
+/////////////////以下api被废弃//////////////////
+
 /**
  *  设置是否显示下拉刷新控件
  *

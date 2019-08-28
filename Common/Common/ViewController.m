@@ -29,7 +29,6 @@
     [cellObjects addObject:object];
     self.dataSource = [[NIMutableTableViewModel alloc] initWithListArray:cellObjects delegate:self];
     [self.tableView reloadData];
-    [self setShowsPullToRefresh:YES];
 }
 
 - (void)didReceiveMemoryWarning {
