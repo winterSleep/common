@@ -24,17 +24,7 @@ extern NSInteger const kPullToRefreshAnimationImagesCount;
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageView = [[UIImageView alloc] init];
-        NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
-        NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_trigger_ani%i", kPullToRefreshAnimationImagesCount]);
-        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-        [self.imageView setImage:image];
-        [self addSubview:self.imageView];
-        [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(self);
-            make.width.mas_equalTo(60.0f);
-            make.height.mas_equalTo(60.0f);
-        }];
+        
     }
     return self;
 }

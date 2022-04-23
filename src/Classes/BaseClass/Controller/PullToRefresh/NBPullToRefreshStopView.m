@@ -27,11 +27,7 @@ NSInteger const kPullToRefreshAnimationImagesCount = 20;
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageView = [[UIImageView alloc] init];
-        [self addSubview:self.imageView];
-        [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self);
-        }];
+        
     }
     return self;
 }
@@ -42,35 +38,18 @@ NSInteger const kPullToRefreshAnimationImagesCount = 20;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (self.shouldAnimate) {
-        CGPoint contentOffset = scrollView.contentOffset;
-        UIEdgeInsets contentInsets = scrollView.contentInset;
-        if (contentOffset.y < 0 && (fabs(contentOffset.y) -  contentInsets.top)> 0) {
-            CGFloat distance = fabs(contentOffset.y) -  contentInsets.top;
-            NSInteger animationImagesCount = kPullToRefreshAnimationImagesCount;
-            NSInteger imageNumber = MIN(animationImagesCount, (distance / 3));
-            NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
-            NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_trigger_ani%i", imageNumber]);
-            UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-            [self.imageView setImage:image];
-        }
+        
     }
 }
 
 - (void)updateViewWithState:(ZYSVPullToRefreshState)state{
-    [self pullToRefreshViewChangeStateFrom:self.state toState:state];
+//    [self pullToRefreshViewChangeStateFrom:self.state toState:state];
     [super updateViewWithState:state];
 }
 
 - (void)pullToRefreshViewChangeStateFrom:(ZYSVPullToRefreshState)fromState
                                  toState:(ZYSVPullToRefreshState)toState{
-    if (fromState == ZYSVPullToRefreshStateLoading &&
-        toState == ZYSVPullToRefreshStateStopped) {
-        self.shouldAnimate = false;
-        NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
-        NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_trigger_ani%i", kPullToRefreshAnimationImagesCount]);
-        UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-        [self.imageView setImage:image];
-    }
+    
 }
 
 @end

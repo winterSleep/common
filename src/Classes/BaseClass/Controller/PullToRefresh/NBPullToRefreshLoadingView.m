@@ -23,36 +23,13 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
-        self.imageView = [[UIImageView alloc] init];
-        NSMutableArray *animationImages = [NSMutableArray array];
-        NSBundle *bundle = [NSBundle bundleWithBundleName:@"Common" podName:@"WinterCommon"];
-        for (int i=0; i<4; i++) {
-            NSString *imagePath = NIPathForBundleResource(bundle, [NSString stringWithFormat:@"pull_refresh_loading_%i", i]);
-            UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
-            if (image) {
-                [animationImages addObject:image];
-            }
-        }
-        [self.imageView setAnimationImages:animationImages];
-        [self addSubview:self.imageView];
-        [self.imageView setAnimationDuration:0.6];
         
-        [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.center.mas_equalTo(self);
-            make.width.mas_equalTo(61.0f);
-            make.height.mas_equalTo(60.0f);
-        }];
     }
     return self;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview{
     [super willMoveToSuperview:newSuperview];
-    if (newSuperview) {
-        [self.imageView startAnimating];
-    }else{
-        [self.imageView stopAnimating];
-    }
 }
 
 @end
