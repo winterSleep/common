@@ -106,7 +106,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-#  s.resources = "Common/Common.bundle"
+  s.resources = "src/Common.bundle"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
