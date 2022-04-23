@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "WinterCommon"
-  s.version      = "0.0.4"
+  s.version      = "0.0.5"
   s.summary      = "Custom"
 
   # This description is used to generate tags and improve search results.
@@ -65,7 +65,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "8.0"
+  s.platform     = :ios, "11.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -91,12 +91,12 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Classes", "Common/CommonLib/**/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  s.source_files  = "src/Classes/**/*.{h,m}","src/Classes/*.{h,m}"
+#  s.exclude_files = "Classes/Exclude"
 
-  # s.public_header_files = "Classes/**/*.h"
+  s.public_header_files = "src/Classes/**/*.{h}","src/Classes/*.{h}"
 
-
+  s.static_framework = true
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
   #  A list of resources included with the Pod. These are copied into the
@@ -106,7 +106,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-  s.resources = "Common/CommonLib/Common.bundle"
+#  s.resources = "Common/Common.bundle"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
