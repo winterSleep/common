@@ -29,6 +29,10 @@
 - (void)setRt_disableInteractivePop:(BOOL)rt_disableInteractivePop
 {
     objc_setAssociatedObject(self, @selector(rt_disableInteractivePop), @(rt_disableInteractivePop), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    if (self.rt_navigationController.rt_topViewController == self) {
+        self.rt_navigationController.interactivePopGestureRecognizer.enabled = !rt_disableInteractivePop;
+    }
 }
 
 - (BOOL)rt_disableInteractivePop
@@ -50,13 +54,9 @@
     return (RTRootNavigationController *)vc;
 }
 
-- (UIBarButtonItem *)customBackItemWithTarget:(id)target
-                                       action:(SEL)action
+- (id<UIViewControllerAnimatedTransitioning>)rt_animatedTransitioning
 {
-    return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", nil)
-                                            style:UIBarButtonItemStylePlain
-                                           target:target
-                                           action:action];
+    return nil;
 }
 
 @end
