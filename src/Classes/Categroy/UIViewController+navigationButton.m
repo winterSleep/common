@@ -22,20 +22,34 @@
     UIImage *colorImage = [UIImage imageWithColor:imageColor];
     
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    [navigationBar setTintColor:[UIColor whiteColor]];
-    [navigationBar setBackgroundImage:colorImage forBarMetrics:UIBarMetricsDefault];
+    navigationBar.tintColor = [UIColor whiteColor];
+    navigationBar.barTintColor = [UIColor whiteColor];
     
     NSDictionary *attribute = [NSDictionary dictionaryWithObjectsAndKeys:
                                [UIColor whiteColor], NSForegroundColorAttributeName,
-                               [UIColor clearColor], NSForegroundColorAttributeName,
                                [UIFont systemFontOfSize:17], NSFontAttributeName,
                                nil];
-    [self.navigationController.navigationBar setTitleTextAttributes:attribute];
     
-    //删除底部的线
-    if ([self prefersNavigationLineHide]) {
-        [[self bottomLineInView:navigationBar] removeFromSuperview];
-        [navigationBar setShadowImage:[[UIImage alloc] init]];
+    if (@available(iOS 15.0, *)) {
+        UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+        [appearance configureWithOpaqueBackground];
+        appearance.backgroundColor = imageColor;
+        appearance.titleTextAttributes = attribute;
+        if ([self prefersNavigationLineHide]) {
+            appearance.shadowColor = [UIColor clearColor];
+            appearance.shadowImage = [UIImage imageWithColor:[UIColor clearColor]];
+        }
+        self.navigationController.navigationBar.standardAppearance = appearance;
+        self.navigationController.navigationBar.scrollEdgeAppearance = self.navigationController.navigationBar.standardAppearance;
+    }else{
+        [navigationBar setTintColor:[UIColor whiteColor]];
+        [navigationBar setBackgroundImage:colorImage forBarMetrics:UIBarMetricsDefault];
+        [self.navigationController.navigationBar setTitleTextAttributes:attribute];
+        //删除底部的线
+        if ([self prefersNavigationLineHide]) {
+            [[self bottomLineInView:navigationBar] removeFromSuperview];
+            [navigationBar setShadowImage:[[UIImage alloc] init]];
+        }
     }
 }
 
