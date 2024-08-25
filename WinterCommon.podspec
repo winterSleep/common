@@ -138,7 +138,6 @@ Pod::Spec.new do |s|
   s.dependency 'Nimbus/AttributedLabel'
   s.dependency 'Nimbus/Badge'
   s.dependency 'Nimbus/Models'
-  s.dependency 'Nimbus/WebController'
   s.dependency 'SDWebImage'
   s.dependency 'MBProgressHUD'
   s.dependency 'Masonry'

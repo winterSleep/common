@@ -19,6 +19,9 @@
 //用于cell点击, tableView的delegate事件传递等操作
 @property (strong, nonatomic, readonly) NITableViewActions *actions;
 
+//遍历获得所有 cellObject
+- (void)enumerateObjectsUsingBlock:(void (NS_NOESCAPE ^)(NSObject *cellObject, NSIndexPath *indexPath))block;
+
 - (void)resetActions;
 
 @end

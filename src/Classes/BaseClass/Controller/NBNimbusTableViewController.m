@@ -8,6 +8,7 @@
 
 #import "NBNimbusTableViewController.h"
 #import "XDNibCellObject.h"
+#import <Nimbus/NITableViewModel+Private.h>
 
 @interface NBNimbusTableViewController (){
     
@@ -186,6 +187,18 @@
     self.dataSource = nil;
     self.actions = nil;
     _tableView.dataSource = nil;
+}
+
+//遍历获得所有 cellObject
+- (void)enumerateObjectsUsingBlock:(void (NS_NOESCAPE ^)(NSObject *cellObject, NSIndexPath *indexPath))block{
+    [self.dataSource.sections enumerateObjectsUsingBlock:^(NITableViewModelSection *section, NSUInteger sectionIdx, BOOL * _Nonnull sectionStop) {
+        [section.rows enumerateObjectsUsingBlock:^(NSObject *row, NSUInteger rowIdx, BOOL * _Nonnull rowStop) {
+            if (block){
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:rowIdx inSection:sectionIdx];
+                block(row, indexPath);
+            }
+        }];
+    }];
 }
 
 @end

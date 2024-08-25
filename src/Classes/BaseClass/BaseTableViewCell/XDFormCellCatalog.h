@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <Nimbus/NimbusModels.h>
+#import <Nimbus/NIFormCellCatalog.h>
+#import <Nimbus/NIRadioGroup.h>
 #import "XDCellLineView.h"
 
 @interface XDSwitchFormElement : NISwitchFormElement
